@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Query Validator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #FFD700;
+        }
+
+        .container {
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            width: 450px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #FFD700;
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 90%;
+            height: 140px;
+            padding: 12px;
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            resize: none;
+            font-size: 15px;
+            outline: none;
+            background: #252525;
+            color: #FFD700;
+            text-align: left;
+        }
+
+        button {
+            background: #FFD700;
+            color: #121212;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 90%;
+            margin-top: 15px;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #e6c200;
+        }
+
+        #result, #suggestion {
+            margin-top: 15px;
+            font-size: 15px;
+            color: #fff;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            word-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
+            width: 90%;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SQL Query Validator</h1>
+        <textarea id="sql-query" placeholder="Enter your SQL query"></textarea>
+        <button onclick="validateQuery()">Validate</button>
+        <div id="result"></div>
+        <div id="suggestion"></div>
+    </div>
+
+    <script>
+        async function validateQuery() {
+            const query = document.getElementById('sql-query').value;
+
+            try {
+                const response = await fetch('/validate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+
+                const result = await response.json();
+                console.log("Response from Server:", result);
+
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerText = result.message;
+
+                if (result.suggestion) {
+                    resultDiv.innerText += "\nSuggested Query: " + result.suggestion;
+                }
+            } catch (error) {
+                console.error("Fetch Error:", error);
+            }
+        }
+    </script>
+</body>
+
+</html>
