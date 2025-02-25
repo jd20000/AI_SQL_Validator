@@ -4,6 +4,11 @@
 
 ## Overview
 This is a Flask-based web application that validates SQL query syntax entered by the user. The app checks whether the syntax is correct and highlights errors if present. The frontend is built using Tailwind CSS, and the backend uses SQLite for query validation.
+## SCREENSHOTS
+
+### HOMEPAGE
+![Homepage Screenshot](https://github.com/jd20000/AI_SQL_Validator/blob/main/screenshots/Screenshot%20(15).png)
+![Homepage Screenshot](https://github.com/jd20000/AI_SQL_Validator/blob/main/screenshots/Screenshot%20(16).png)
 
 ## Features
 - **SQL Syntax Validation**: Checks for correct SQL syntax without executing the query.
